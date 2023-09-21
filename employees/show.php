@@ -7,7 +7,6 @@
   $empl = mysqli_query($connect, "SELECT * FROM `employees2` WHERE `id` = $id");
   $empl = mysqli_fetch_assoc($empl);
 
-
   $empl_posit = mysqli_query($connect, "SELECT * FROM `employees_positions2` WHERE `empl_id` = $id");
   $empl_posit = mysqli_fetch_assoc($empl_posit);
   $posit_id = $empl_posit['posit_id'];
