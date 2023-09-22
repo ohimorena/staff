@@ -16,6 +16,7 @@
   $empl_pivot = mysqli_fetch_assoc($empl_pivot); 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
