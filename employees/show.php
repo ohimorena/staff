@@ -7,11 +7,9 @@
   $empl = mysqli_query($connect, "SELECT * FROM `employees2` WHERE `id` = $id");
   $empl = mysqli_fetch_assoc($empl);
 
-  $empl_posit = mysqli_query($connect, "SELECT * FROM `employees_positions2` WHERE `empl_id` = $id");
-  $empl_posit = mysqli_fetch_assoc($empl_posit);
-  $posit_id = $empl_posit['posit_id'];
-
-  $posit = mysqli_query($connect, "SELECT * FROM `positions2` WHERE `id` = $posit_id");
+  $posit = mysqli_query($connect, "SELECT * FROM `positions2` JOIN `employees_positions2`
+  ON `positions2`.`id`=`employees_positions2`.`posit_id`
+  WHERE `empl_id` = $id");
   $posit = mysqli_fetch_assoc($posit);
 ?>
 

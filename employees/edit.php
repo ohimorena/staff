@@ -2,18 +2,18 @@
   require_once '../config/connect.php';
   require '../layouts/nav.php';
   
-  $empl_id = $_GET['id'];
-  $empl = mysqli_query($connect, "SELECT * FROM `employees2` WHERE `id` = $empl_id");
+  $id = $_GET['id'];
+
+  $empl = mysqli_query($connect, "SELECT * FROM `employees2` WHERE `id` = $id");
   $empl = mysqli_fetch_assoc($empl);
 
   $posits = mysqli_query($connect, "SELECT * FROM `positions2`");
   $posits = mysqli_fetch_all($posits);
   
-  $empl_pivot = mysqli_query($connect, "SELECT * FROM `employees_positions2`  
-  LEFT JOIN `positions2`
-  ON `employees_positions2`.`posit_id`= `positions2`.`id` 
-  WHERE `employees_positions2`.`empl_id` = $empl_id");
-  $empl_pivot = mysqli_fetch_assoc($empl_pivot); 
+  $empl_posit = mysqli_query($connect, "SELECT * FROM `positions2` JOIN `employees_positions2` 
+  ON `positions2`.`id` = `employees_positions2`.`posit_id` 
+  WHERE `empl_id` = $id");
+  $empl_posit = mysqli_fetch_assoc($empl_posit);
 ?>
 
 
@@ -40,7 +40,7 @@
 
     <form action="update.php" method="post">
 
-    <input type="hidden" name="empl_id" value="<?= $empl_id ?>">
+    <input type="hidden" name="empl_id" value="<?= $id ?>">
 
     <div class="row mb-3">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Фамилия</label>
@@ -92,7 +92,7 @@
       <select class="form-select" name="posit_id">
         <option disabled>ДОЛЖНОСТЬ</option>
         <?php foreach($posits as $posit): ?>
-        <option value="<?php echo $posit[0] ?>" <?php if($posit[1] == $empl_pivot['position']): ?> selected="selected" <?php endif ?> > 
+        <option value="<?php echo $posit[0] ?>" <?php if($posit[1] == $empl_posit['position']): ?> selected="selected" <?php endif ?> > 
         <?php echo $posit[1] ?> 
         </option>
         <?php endforeach ?>
