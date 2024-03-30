@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Персонал</title>
 </head>
@@ -78,7 +79,50 @@
       </form>
     </div>
     <br>
+
+    <p>
+      <b>ДОЛЖНОСТЬ</b>
+    </p>
+    
+    <p>
+      <select class="form-select" name="posit_id" id="posit_id">
+        <option selected disabled>ДОЛЖНОСТЬ</option>
+        <?php
+          foreach($posits as $posit) {
+        ?>
+        <option value="<?= $posit[0]?>"> <?= $posit[1] ?> </option>
+        <?php
+          }
+        ?>
+      </select>
+    </p>
+
+    <p>
+      <b>СОТРУДНИКИ</b>
+    </p>
+    
+    <p>
+      <select class="form-select" name="empl_id" id="empl_id"></select>
+    </p><br><br>
+
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $('#posit_id').change(function(){
+        var posit_id = $(this).val();
+        $.ajax({
+          url: "empls_select_handler.php",
+          method: "POST",
+          data: {posit_id: posit_id},
+          success:function(data)
+          {
+            $('#empl_id').html(data);
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
